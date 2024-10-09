@@ -93,10 +93,6 @@ int main () {
 
     // get the data from the file into a string
     while (getline(inputFile, data)) {
-       /*
-        if (!data.empty() && (data[0] != '/' && data[1] != '/') ||
-            !data.empty() && (data[0] !='*' && data[1] != '*') ||
-            data.empty() && data[0] !='*') */
         if(!data.empty() && (data[0] != '/' && data[1] != '/') && (data[0] !='*' && data[1] != '*') && (data[0] !='/' && data[1] != '*') &&(data[0] !='*' && data[1] != '/'))
         {
             parsedData += data.append("\n");
@@ -128,7 +124,6 @@ int main () {
     // display the new string
    std::cout << cleanData << std::endl;
 
-
     // tokenize
     std::string temp;
 
@@ -144,20 +139,15 @@ int main () {
                     temp.clear();
                  }
             }
-            
-           
         }
         else if(cleanData[i] == ',' || cleanData[i] == '(' || cleanData[i] == ')' || cleanData[i] == ';' 
                 ||cleanData[i] == '{' || cleanData[i] == '}' || cleanData[i] == '[' || cleanData[i] == ']')
                 {
 
                     if(!temp.empty())
-                    {
-                      
+                    {               
                         tokenizeData(temp);
-                        temp.clear();
-                        
-                       
+                        temp.clear();                  
                     }
                     tokenizeData(std::string(1, cleanData[i]));
                    
@@ -172,7 +162,7 @@ int main () {
         }
         // Tokenize << or >> as a single token
         tokenizeData(std::string(1, cleanData[i]) + std::string(1, cleanData[i+1]));
-        i++; // Skip the next character since we processed a 2-character operator
+        i++;
     }
         else
         {
@@ -186,7 +176,7 @@ int main () {
 
     // Display Categories with tokens 
     
-    std::cout << "Categories | Tokens          |\n" ;
+    std::cout << "Categories | Tokens\n" ;
     
     std::cout << "Keywords: ";
     
@@ -197,23 +187,18 @@ int main () {
             std::cout << tokenHolder[i].value << ", ";
             
         }
-       
-        
     }
 
-    std::cout << "\n";
+    std::cout << "\nSeparators: ";
 
-    std::cout << "Separators: ";
     for (int i = 0; i < tokenHolder.size(); ++i) {
         
         if(tokenHolder[i].tokenType == SEPARATOR)
         {
             std::cout << tokenHolder[i].value << ", ";
         }
-        
     }
     
-
     std::cout << "\nIdentifier: ";
 
     for (int i = 0; i < tokenHolder.size(); ++i) {
@@ -221,21 +206,17 @@ int main () {
         if(tokenHolder[i].tokenType == IDENTIFIER)
         {
             std::cout << tokenHolder[i].value << ", ";
-        }
-       
-        
+        } 
     }
 
-     std::cout << "\nOperators: ";
+    std::cout << "\nOperators: ";
 
     for (int i = 0; i < tokenHolder.size(); ++i) {
         
         if(tokenHolder[i].tokenType == OPERATOR)
         {
             std::cout << tokenHolder[i].value << ", ";
-        }
-       
-        
+        } 
     }
       std::cout << "\nLiterals: ";
 
@@ -244,9 +225,7 @@ int main () {
         if(tokenHolder[i].tokenType == LITERAL)
         {
             std::cout << tokenHolder[i].value << ", ";
-        }
-   
-        
+        } 
     }
 
     std::cout << "\nTokens: " << tokenCounter << std::endl;
